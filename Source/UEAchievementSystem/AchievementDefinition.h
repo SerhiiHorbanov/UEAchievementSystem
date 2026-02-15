@@ -6,6 +6,8 @@
 #include "Engine/DataAsset.h"
 #include "AchievementDefinition.generated.h"
 
+enum class EAchievementCompletionType : uint8;
+
 UCLASS()
 class UEACHIEVEMENTSYSTEM_API UAchievementDefinition : public UPrimaryDataAsset
 {
@@ -20,5 +22,14 @@ public:
 	FText Name;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Achievement")
-	float Value;
+	FText Description;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Achievement")
+	UTexture2D* Icon;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Achievement")
+	int TargetValue;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Achievement")
+	EAchievementCompletionType CompletionType;
 };
