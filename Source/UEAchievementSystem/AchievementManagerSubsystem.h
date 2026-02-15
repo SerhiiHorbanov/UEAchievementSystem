@@ -15,8 +15,6 @@ UCLASS()
 class UEACHIEVEMENTSYSTEM_API UAchievementManagerSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
-
-public:
 	
 	UPROPERTY()
 	TMap<FName, const UAchievementDefinition*> AchievementDefinitions;
@@ -24,16 +22,19 @@ public:
 	UPROPERTY()
 	TMap<FName, UAchievementProgress*> AchievementProgresses;
 	
-	UPROPERTY()
+public:
+	
+	UPROPERTY(EditAnywhere, BlueprintAssignable) 
 	FAchievementUnlocked OnAchievementUnlocked;
 
-
 	static UAchievementManagerSubsystem* GetInstance(const UObject* WorldContextObject);
-	
 
-	void UnlockAchievement(const FName& AchievementID);
-	void AddProgress(const FName& AchievementID, const int ProgressValue);
-	void SetProgress(const FName& AchievementID, const int ProgressValue);
+	const UAchievementDefinition* GetDefinition(const FName& AchievementID) const;
+	UAchievementProgress* GetProgress(const FName& AchievementID) const;
+	
+	void UnlockAchievement(const FName& AchievementID) const;
+	void AddCounterProgress(const FName& AchievementID, const int ProgressValue);
+	void SetCounterProgress(const FName& AchievementID, const int ProgressValue);
 	
 	bool IsAchievementUnlocked(const FName& AchievementID) const;
 	
@@ -42,4 +43,9 @@ private:
 	void LoadAchievementDefinitions();
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	void InitializeAchievementProgresses();
+
+	void UnlockAchievement(UAchievementProgress* Progress) const;
+	void SetCounterProgress(UAchievementProgress* Progress, const int ProgressValue) const;
+	
+	static void SaveAchievementProgress(UAchievementProgress* Progress);
 };

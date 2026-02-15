@@ -19,7 +19,7 @@ bool UAchievementManagingFunctions::IsAchievementUnlocked(const FName& Achieveme
 
 void UAchievementManagingFunctions::UnlockAchievement(const FName& AchievementID, const UObject* WorldContextObject)
 {
-	UAchievementManagerSubsystem* AchievementManagerSubsystem = UAchievementManagerSubsystem::GetInstance(WorldContextObject);
+	const UAchievementManagerSubsystem* AchievementManagerSubsystem = UAchievementManagerSubsystem::GetInstance(WorldContextObject);
 	if (AchievementManagerSubsystem)
 	{
 		AchievementManagerSubsystem->UnlockAchievement(AchievementID);
@@ -31,7 +31,7 @@ void UAchievementManagingFunctions::AddProgressToAchievement(const FName& Achiev
 	UAchievementManagerSubsystem* AchievementManagerSubsystem = UAchievementManagerSubsystem::GetInstance(WorldContextObject);
 	if (AchievementManagerSubsystem)
 	{
-		AchievementManagerSubsystem->AddProgress(AchievementID, ProgressValue);
+		AchievementManagerSubsystem->AddCounterProgress(AchievementID, ProgressValue);
 	}
 }
 
@@ -40,6 +40,6 @@ void UAchievementManagingFunctions::SetProgressOfAchievement(const FName& Achiev
 	UAchievementManagerSubsystem* AchievementManagerSubsystem = UAchievementManagerSubsystem::GetInstance(WorldContextObject);
 	if (AchievementManagerSubsystem)
 	{
-		AchievementManagerSubsystem->SetProgress(AchievementID, ProgressValue);
+		AchievementManagerSubsystem->SetCounterProgress(AchievementID, ProgressValue);
 	}
 }

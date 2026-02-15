@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AchievementCompletionType.h"
 #include "Engine/DataAsset.h"
 #include "AchievementDefinition.generated.h"
 
@@ -27,7 +28,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Achievement")
 	UTexture2D* Icon;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Achievement")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Achievement", 
+		meta = (EditCondition = "CompletionType == EAchievementCompletionType::Counter", EditConidtionHides))
 	int TargetValue;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Achievement")
