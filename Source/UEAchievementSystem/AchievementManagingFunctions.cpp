@@ -7,7 +7,7 @@
 
 bool UAchievementManagingFunctions::IsAchievementUnlocked(const FName& AchievementID, const UObject* WorldContextObject)
 {
-	const UAchievementManagerSubsystem* AchievementManagerSubsystem = GetAchievementManagerSubsystem(WorldContextObject);
+	const UAchievementManagerSubsystem* AchievementManagerSubsystem = UAchievementManagerSubsystem::GetInstance(WorldContextObject);
 	
 	if (!AchievementManagerSubsystem)
 	{
@@ -17,14 +17,9 @@ bool UAchievementManagingFunctions::IsAchievementUnlocked(const FName& Achieveme
 	return AchievementManagerSubsystem->IsAchievementUnlocked(AchievementID);
 }
 
-UAchievementManagerSubsystem* UAchievementManagingFunctions::GetAchievementManagerSubsystem(const UObject* WorldContextObject)
-{
-	return WorldContextObject->GetWorld()->GetGameInstance()->GetSubsystem<UAchievementManagerSubsystem>();
-}
-
 void UAchievementManagingFunctions::UnlockAchievement(const FName& AchievementID, const UObject* WorldContextObject)
 {
-	UAchievementManagerSubsystem* AchievementManagerSubsystem = GetAchievementManagerSubsystem(WorldContextObject);
+	UAchievementManagerSubsystem* AchievementManagerSubsystem = UAchievementManagerSubsystem::GetInstance(WorldContextObject);
 	if (AchievementManagerSubsystem)
 	{
 		AchievementManagerSubsystem->UnlockAchievement(AchievementID);
@@ -33,7 +28,7 @@ void UAchievementManagingFunctions::UnlockAchievement(const FName& AchievementID
 
 void UAchievementManagingFunctions::AddProgressToAchievement(const FName& AchievementID, const int ProgressValue, const UObject* WorldContextObject)
 {
-	UAchievementManagerSubsystem* AchievementManagerSubsystem = GetAchievementManagerSubsystem(WorldContextObject);
+	UAchievementManagerSubsystem* AchievementManagerSubsystem = UAchievementManagerSubsystem::GetInstance(WorldContextObject);
 	if (AchievementManagerSubsystem)
 	{
 		AchievementManagerSubsystem->AddProgress(AchievementID, ProgressValue);
@@ -42,7 +37,7 @@ void UAchievementManagingFunctions::AddProgressToAchievement(const FName& Achiev
 
 void UAchievementManagingFunctions::SetProgressOfAchievement(const FName& AchievementID, const int ProgressValue, const UObject* WorldContextObject)
 {
-	UAchievementManagerSubsystem* AchievementManagerSubsystem = GetAchievementManagerSubsystem(WorldContextObject);
+	UAchievementManagerSubsystem* AchievementManagerSubsystem = UAchievementManagerSubsystem::GetInstance(WorldContextObject);
 	if (AchievementManagerSubsystem)
 	{
 		AchievementManagerSubsystem->SetProgress(AchievementID, ProgressValue);

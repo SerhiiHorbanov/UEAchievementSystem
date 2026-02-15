@@ -48,6 +48,11 @@ void UAchievementManagerSubsystem::InitializeAchievementProgresses()
 	}
 }
 
+UAchievementManagerSubsystem* UAchievementManagerSubsystem::GetInstance(const UObject* WorldContextObject)
+{
+	return WorldContextObject->GetWorld()->GetGameInstance()->GetSubsystem<UAchievementManagerSubsystem>();
+}
+
 void UAchievementManagerSubsystem::UnlockAchievement(const FName& AchievementID)
 {
 	UAchievementProgress* Progress = AchievementProgresses[AchievementID];

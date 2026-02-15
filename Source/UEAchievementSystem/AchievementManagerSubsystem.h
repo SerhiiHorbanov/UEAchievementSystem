@@ -27,9 +27,9 @@ public:
 	UPROPERTY()
 	FAchievementUnlocked OnAchievementUnlocked;
 
-	void LoadAchievementDefinitions();
-	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-	void InitializeAchievementProgresses();
+
+	static UAchievementManagerSubsystem* GetInstance(const UObject* WorldContextObject);
+	
 
 	void UnlockAchievement(const FName& AchievementID);
 	void AddProgress(const FName& AchievementID, const int ProgressValue);
@@ -39,5 +39,7 @@ public:
 	
 private:
 	
-	
+	void LoadAchievementDefinitions();
+	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+	void InitializeAchievementProgresses();
 };

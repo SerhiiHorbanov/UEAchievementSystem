@@ -23,8 +23,4 @@ class UEACHIEVEMENTSYSTEM_API UAchievementManagingFunctions : public UBlueprintF
 	
 	UFUNCTION(BlueprintCallable, Category = "Achievements", meta = (WorldContext = "WorldContextObject"))
 	static void SetProgressOfAchievement(const FName& AchievementID, const int ProgressValue, const UObject* WorldContextObject);
-	
-private:
-	
-	static UAchievementManagerSubsystem* GetAchievementManagerSubsystem(const UObject* WorldContextObject);
 };
