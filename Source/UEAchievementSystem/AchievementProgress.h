@@ -6,6 +6,8 @@
 #include "GameFramework/SaveGame.h"
 #include "AchievementProgress.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAchievementProgressUpdated);
+
 UCLASS()
 class UEACHIEVEMENTSYSTEM_API UAchievementProgress : public USaveGame
 {
@@ -21,4 +23,7 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Progress")
 	int ProgressValue;
+	
+	UPROPERTY(BlueprintAssignable, Category = "Progress")
+	FAchievementProgressUpdated OnProgressUpdated;
 };
