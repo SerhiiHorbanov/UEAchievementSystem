@@ -43,3 +43,14 @@ void UAchievementManagingFunctions::SetProgressOfAchievement(const FName& Achiev
 		AchievementManagerSubsystem->SetCounterProgress(AchievementID, ProgressValue);
 	}
 }
+
+TArray<FAchievementAndProgress> UAchievementManagingFunctions::GetAllAchievementsAndProgresses(const UObject* WorldContextObject)
+{
+	const UAchievementManagerSubsystem* AchievementManagerSubsystem = UAchievementManagerSubsystem::GetInstance(WorldContextObject);
+	if (AchievementManagerSubsystem)
+	{
+		return AchievementManagerSubsystem->GetAchievementDefinitionsAndProgresses(); 
+	}
+
+	return TArray<FAchievementAndProgress>();
+}

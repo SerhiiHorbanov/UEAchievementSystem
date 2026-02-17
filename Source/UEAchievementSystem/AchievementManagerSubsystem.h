@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
+#include "AchievementAndProgress.h"
 #include "AchievementManagerSubsystem.generated.h"
 
 class UAchievementDefinition;
@@ -31,6 +32,8 @@ public:
 
 	const UAchievementDefinition* GetDefinition(const FName& AchievementID) const;
 	UAchievementProgress* GetProgress(const FName& AchievementID) const;
+	
+	TArray<FAchievementAndProgress> GetAchievementDefinitionsAndProgresses() const;
 	
 	void UnlockAchievement(const FName& AchievementID) const;
 	void AddCounterProgress(const FName& AchievementID, const int ProgressValue);

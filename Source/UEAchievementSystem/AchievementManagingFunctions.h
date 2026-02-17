@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AchievementAndProgress.h"
 #include "AchievementManagerSubsystem.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "AchievementManagingFunctions.generated.h"
@@ -23,4 +24,7 @@ class UEACHIEVEMENTSYSTEM_API UAchievementManagingFunctions : public UBlueprintF
 	
 	UFUNCTION(BlueprintCallable, Category = "Achievements", meta = (WorldContext = "WorldContextObject"))
 	static void SetProgressOfAchievement(const FName& AchievementID, const int ProgressValue, const UObject* WorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, Category = "Achievements", meta = (WorldContext = "WorldContextObject"))
+	static TArray<FAchievementAndProgress> GetAllAchievementsAndProgresses(const UObject* WorldContextObject);
 };

@@ -94,6 +94,20 @@ UAchievementProgress* UAchievementManagerSubsystem::GetProgress(const FName& Ach
 	return *AchievementProgresses.Find(AchievementID);
 }
 
+TArray<FAchievementAndProgress> UAchievementManagerSubsystem::GetAchievementDefinitionsAndProgresses() const
+{
+	TArray<FAchievementAndProgress> Result;
+	Result.Reserve(AchievementProgresses.Num());
+	
+	for (auto& [Name, Progress] : AchievementProgresses)
+	{
+		const UAchievementDefinition* Definition = GetDefinition(Name);
+		Result.Add({Definition, Progress});
+	}
+	
+	return Result;
+}
+
 void UAchievementManagerSubsystem::UnlockAchievement(const FName& AchievementID) const
 {
 	UAchievementProgress* Progress = GetProgress(AchievementID);
