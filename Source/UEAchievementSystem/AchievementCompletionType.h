@@ -8,6 +8,6 @@
 UENUM(BlueprintType)
 enum class EAchievementCompletionType : uint8
 {
-	Counter,
 	Boolean,
+	Counter,
 };

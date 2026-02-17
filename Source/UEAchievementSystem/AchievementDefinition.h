@@ -34,4 +34,7 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Achievement")
 	EAchievementCompletionType CompletionType;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Achievement")
+	bool IsHidden;
 };
