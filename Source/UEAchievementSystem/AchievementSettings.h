@@ -8,14 +8,19 @@
 
 class UAchievementDefinition;
 
-UCLASS(Config=Editor, DefaultConfig, meta=(DisplayName="My Editor Settings"))
+UCLASS(Config=Game, DefaultConfig, meta=(DisplayName="Achievements"))
 class UEACHIEVEMENTSYSTEM_API UAchievementSettings : public UDeveloperSettings
 {
 	GENERATED_BODY()
 	
 public:
-	
-	UPROPERTY(Config, EditAnywhere, Category = "Achievements")
+
+	UPROPERTY(Config, EditAnywhere, Category = "Settings")
 	TArray<TSoftObjectPtr<UAchievementDefinition>> AchievementDefinitions;
-	
+
+	UPROPERTY(Config, EditAnywhere, Category = "Settings")
+	bool EnableLogs;
+
+	UPROPERTY(Config, EditAnywhere, Category = "Settings")
+	bool AllowHiddenAchievements;
 };
