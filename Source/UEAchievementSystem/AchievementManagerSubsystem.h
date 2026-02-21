@@ -18,7 +18,7 @@ class UEACHIEVEMENTSYSTEM_API UAchievementManagerSubsystem : public UGameInstanc
 	GENERATED_BODY()
 	
 	UPROPERTY()
-	TMap<FName, const UAchievementDefinition*> AchievementDefinitions;
+	TMap<FName, UAchievementDefinition*> AchievementDefinitions;
 	
 	UPROPERTY()
 	TMap<FName, UAchievementProgress*> AchievementProgresses;
@@ -28,17 +28,28 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintAssignable) 
 	FAchievementUnlocked OnAchievementUnlocked;
 
+	UFUNCTION(BlueprintPure, Category = "Achievements", meta = (WorldContext = "WorldContextObject"))
 	static UAchievementManagerSubsystem* GetInstance(const UObject* WorldContextObject);
 
-	const UAchievementDefinition* GetDefinition(const FName& AchievementID) const;
+	UFUNCTION(BlueprintCallable, Category = "Achievements")
+	UAchievementDefinition* GetDefinition(const FName& AchievementID) const;
+
+	UFUNCTION(BlueprintCallable, Category = "Achievements")
 	UAchievementProgress* GetProgress(const FName& AchievementID) const;
 	
+	UFUNCTION(BlueprintCallable, Category = "Achievements")
 	TArray<FAchievementAndProgress> GetAchievementDefinitionsAndProgresses() const;
 	
-	void UnlockAchievement(const FName& AchievementID) const;
+	UFUNCTION(BlueprintCallable, Category = "Achievements")
+	void UnlockAchievement(const FName& AchievementID);
+
+	UFUNCTION(BlueprintCallable, Category = "Achievements")
 	void AddCounterProgress(const FName& AchievementID, const int ProgressValue);
+
+	UFUNCTION(BlueprintCallable, Category = "Achievements")
 	void SetCounterProgress(const FName& AchievementID, const int ProgressValue);
 	
+	UFUNCTION(BlueprintPure, Category = "Achievements")
 	bool IsAchievementUnlocked(const FName& AchievementID) const;
 	
 private:
@@ -47,8 +58,8 @@ private:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	void InitializeAchievementProgresses();
 
-	void UnlockAchievement(UAchievementProgress* Progress) const;
-	void SetCounterProgress(UAchievementProgress* Progress, const int ProgressValue) const;
+	void UnlockAchievement(UAchievementProgress* Progress);
+	void SetCounterProgress(UAchievementProgress* Progress, const int ProgressValue);
 	
 	static void SaveAchievementProgress(UAchievementProgress* Progress);
 };

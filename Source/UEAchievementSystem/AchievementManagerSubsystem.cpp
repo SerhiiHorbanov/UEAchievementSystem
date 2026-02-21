@@ -25,7 +25,7 @@ void UAchievementManagerSubsystem::LoadAchievementDefinitions()
 	for (int i = 0; i < Definitions.Num(); i++)
 	{
 		const TSoftObjectPtr<UAchievementDefinition>& SoftObjectPtr = Definitions[i];
-		const UAchievementDefinition* Definition = SoftObjectPtr.LoadSynchronous();
+		UAchievementDefinition* Definition = SoftObjectPtr.LoadSynchronous();
 		
 		if (!Definition)
 		{
@@ -52,7 +52,6 @@ void UAchievementManagerSubsystem::InitializeAchievementProgresses()
 		else
 		{
 			Progress = NewObject<UAchievementProgress>();
-			Progress->AchievementID = Name;
 		}
 		
 		Progress->AchievementID = Name;
@@ -60,7 +59,7 @@ void UAchievementManagerSubsystem::InitializeAchievementProgresses()
 	}
 }
 
-void UAchievementManagerSubsystem::UnlockAchievement(UAchievementProgress* Progress) const
+void UAchievementManagerSubsystem::UnlockAchievement(UAchievementProgress* Progress)
 {
 	if (!Progress)
 	{
@@ -84,15 +83,16 @@ UAchievementManagerSubsystem* UAchievementManagerSubsystem::GetInstance(const UO
 	return WorldContextObject->GetWorld()->GetGameInstance()->GetSubsystem<UAchievementManagerSubsystem>();
 }
 
-const UAchievementDefinition* UAchievementManagerSubsystem::GetDefinition(const FName& AchievementID) const
+UAchievementDefinition* UAchievementManagerSubsystem::GetDefinition(const FName& AchievementID) const
 {
-	return *AchievementDefinitions.Find(AchievementID);
+	UAchievementDefinition* const* Definition = AchievementDefinitions.Find(AchievementID);
+    return Definition ? *Definition : nullptr;
 }
 
 UAchievementProgress* UAchievementManagerSubsystem::GetProgress(const FName& AchievementID) const
 {
-	return *AchievementProgresses.Find(AchievementID);
-}
+	UAchievementProgress* const* Progress = AchievementProgresses.Find(AchievementID);
+    return Progress ? *Progress : nullptr;}
 
 TArray<FAchievementAndProgress> UAchievementManagerSubsystem::GetAchievementDefinitionsAndProgresses() const
 {
@@ -101,14 +101,14 @@ TArray<FAchievementAndProgress> UAchievementManagerSubsystem::GetAchievementDefi
 	
 	for (auto& [Name, Progress] : AchievementProgresses)
 	{
-		const UAchievementDefinition* Definition = GetDefinition(Name);
+		UAchievementDefinition* Definition = AchievementDefinitions.FindChecked(Name);
 		Result.Add({Definition, Progress});
 	}
 	
 	return Result;
 }
 
-void UAchievementManagerSubsystem::UnlockAchievement(const FName& AchievementID) const
+void UAchievementManagerSubsystem::UnlockAchievement(const FName& AchievementID)
 {
 	UAchievementProgress* Progress = GetProgress(AchievementID);
 		
@@ -118,7 +118,6 @@ void UAchievementManagerSubsystem::UnlockAchievement(const FName& AchievementID)
 void UAchievementManagerSubsystem::AddCounterProgress(const FName& AchievementID, const int ProgressValue)
 {
 	UAchievementProgress* Progress = GetProgress(AchievementID);
-	const UAchievementDefinition* Definition = GetDefinition(AchievementID);
 	
 	if (!Progress)
 	{
@@ -141,11 +140,21 @@ void UAchievementManagerSubsystem::SetCounterProgress(const FName& AchievementID
 	SetCounterProgress(Progress, ProgressValue);
 }
 
-void UAchievementManagerSubsystem::SetCounterProgress(UAchievementProgress* Progress, const int ProgressValue) const
+void UAchievementManagerSubsystem::SetCounterProgress(UAchievementProgress* Progress, const int ProgressValue)
 {
+	if (!Progress)
+	{
+		return;
+	}
+
 	Progress->ProgressValue = ProgressValue;
 
 	const UAchievementDefinition* Definition = GetDefinition(Progress->AchievementID);
+	
+	if (!Definition)
+	{
+		return;
+	}
 	
 	if (Progress->ProgressValue > Definition->TargetValue)
 	{
@@ -155,7 +164,7 @@ void UAchievementManagerSubsystem::SetCounterProgress(UAchievementProgress* Prog
 
 bool UAchievementManagerSubsystem::IsAchievementUnlocked(const FName& AchievementID) const
 {
-	const UAchievementProgress* Progress = *(AchievementProgresses.Find(AchievementID));
+	const UAchievementProgress* Progress = GetProgress(AchievementID);
 	
 	if (!Progress)
 	{

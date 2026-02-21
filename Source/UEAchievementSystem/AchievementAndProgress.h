@@ -14,8 +14,8 @@ struct FAchievementAndProgress
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadOnly, Category = "Achievement")
-	const UAchievementDefinition* Definition = nullptr;
+	UAchievementDefinition* Definition;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Achievement")
-	UAchievementProgress* Progress = nullptr;
+	UAchievementProgress* Progress;
 };
