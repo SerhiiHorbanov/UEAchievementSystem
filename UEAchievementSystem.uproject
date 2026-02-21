@@ -10,8 +10,15 @@
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
 				"Engine",
-				"UnrealEd",
 				"CoreUObject"
+			]
+		},
+		{
+			"Name": "UEAchievementSystemEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"EditorSubsystem"
 			]
 		}
 	],

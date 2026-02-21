@@ -52,6 +52,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Achievements")
 	bool IsAchievementUnlocked(const FName& AchievementID) const;
 	
+	static void SaveAchievementProgress(UAchievementProgress* Progress);
+	
 private:
 	
 	void LoadAchievementDefinitions();
@@ -60,6 +62,4 @@ private:
 
 	void UnlockAchievement(UAchievementProgress* Progress);
 	void SetCounterProgress(UAchievementProgress* Progress, const int ProgressValue);
-	
-	static void SaveAchievementProgress(UAchievementProgress* Progress);
 };
