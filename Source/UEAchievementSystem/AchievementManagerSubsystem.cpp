@@ -65,6 +65,10 @@ void UAchievementManagerSubsystem::UnlockAchievement(UAchievementProgress* Progr
 	{
 		return;
 	}
+	if (Progress->IsCompleted)
+	{
+		return;
+	}
 	
 	Progress->IsCompleted = true;
 	
@@ -131,11 +135,6 @@ void UAchievementManagerSubsystem::AddCounterProgress(const FName& AchievementID
 void UAchievementManagerSubsystem::SetCounterProgress(const FName& AchievementID, const int ProgressValue)
 {
 	UAchievementProgress* Progress = GetProgress(AchievementID);
-	
-	if (!Progress)
-	{
-		return;
-	}
 
 	SetCounterProgress(Progress, ProgressValue);
 }
@@ -156,7 +155,7 @@ void UAchievementManagerSubsystem::SetCounterProgress(UAchievementProgress* Prog
 		return;
 	}
 	
-	if (Progress->ProgressValue > Definition->TargetValue)
+	if (Progress->ProgressValue >= Definition->TargetValue)
 	{
 		UnlockAchievement(Progress->AchievementID);
 	}
