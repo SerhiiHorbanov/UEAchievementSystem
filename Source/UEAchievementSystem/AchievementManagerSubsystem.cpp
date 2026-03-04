@@ -69,10 +69,10 @@ void UAchievementManagerSubsystem::UnlockAchievement(UAchievementProgress* Progr
 	{
 		return;
 	}
-	
 	Progress->IsCompleted = true;
 	
 	OnAchievementUnlocked.Broadcast(Progress->AchievementID);
+    Progress->OnProgressUpdated.Broadcast();
 	
 	SaveAchievementProgress(Progress);
 }
@@ -147,6 +147,7 @@ void UAchievementManagerSubsystem::SetCounterProgress(UAchievementProgress* Prog
 	}
 
 	Progress->ProgressValue = ProgressValue;
+    Progress->OnProgressUpdated.Broadcast();
 
 	const UAchievementDefinition* Definition = GetDefinition(Progress->AchievementID);
 	
